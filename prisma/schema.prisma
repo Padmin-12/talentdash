@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Level {
+  L3
+  L4
+  L5
+  L6
+  SDE_I
+  SDE_II
+  SDE_III
+  STAFF
+  PRINCIPAL
+  IC4
+  IC5
+}
+
+enum Currency {
+  INR
+  USD
+  GBP
+  EUR
+}
+
+enum Source {
+  CONTRIBUTOR
+  SCRAPED
+  AI_INFERRED
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model Company {
+  id              String   @id @default(uuid())
+  name            String   // Display name: "Google India"
+  slug            String   @unique // URL-safe: "google"
+  normalized_name String   @unique // Lowercase, trimmed: "google"
+  industry        String?
+  headquarters    String?
+  founded_year    Int?
+  headcount_range String?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  salaries Salary[]
+
+  @@index([normalized_name])
+}
+
+model Salary {
+  id                 String   @id @default(uuid())
+  company_id         String
+  company            Company  @relation(fields: [company_id], references: [id])
+  role               String
+  level              Level
+  location           String
+  currency           Currency
+  experience_years   Int
+  base_salary        BigInt
+  bonus              BigInt   @default(0)
+  stock              BigInt   @default(0)
+  total_compensation BigInt   // ALWAYS recomputed server-side. Never trust client input.
+  source             Source
+  confidence_score   Decimal  @db.Decimal(3, 2)
+  is_verified        Boolean  @default(false)
+  submitted_at       DateTime @default(now())
+
+  @@index([company_id, level, location]) // Primary filter path
+  @@index([total_compensation])          // Sort path
+  @@index([submitted_at])                // Recency sort path
+  @@index([location, level])             // Geo-level filter path
+}
