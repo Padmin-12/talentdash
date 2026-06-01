@@ -4,7 +4,14 @@
 
 ## Live URL
 
-> _Deployment in progress — will be updated here once Railway deploy is complete._
+**`https://talentdash-production.up.railway.app`**
+
+| Endpoint | Live Link |
+|---|---|
+| Salary list | [/api/salaries](https://talentdash-production.up.railway.app/api/salaries) |
+| Google salaries | [/api/companies/google](https://talentdash-production.up.railway.app/api/companies/google) |
+| Amazon salaries | [/api/companies/amazon](https://talentdash-production.up.railway.app/api/companies/amazon) |
+| Compare two records | /api/compare?s1=ID1&s2=ID2 |
 
 ## What This Is
 
