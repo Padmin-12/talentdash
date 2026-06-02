@@ -79,4 +79,6 @@ model Salary {
   @@index([total_compensation])          // Sort path
   @@index([submitted_at])                // Recency sort path
   @@index([location, level])             // Geo-level filter path
+  @@index([currency])                    // Currency exact-match filter path
+  @@index([level])                       // Level-only filter path
 }

@@ -217,6 +217,10 @@ const SEED_SALARIES: SeedSalary[] = [
   { companyVariant: 'Zepto', role: 'Software Engineer', level: 'SDE_II', location: 'Mumbai', currency: 'INR', experience_years: 3, base_salary: 3000000, bonus: 280000, stock: 1000000, source: 'CONTRIBUTOR', confidence_score: 0.83 },
   { companyVariant: 'Zepto', role: 'Data Engineer', level: 'SDE_II', location: 'Mumbai', currency: 'INR', experience_years: 3, base_salary: 2800000, bonus: 220000, stock: 800000, source: 'SCRAPED', confidence_score: 0.6 },
   { companyVariant: 'Zepto', role: 'Staff Engineer', level: 'STAFF', location: 'Mumbai', currency: 'INR', experience_years: 11, base_salary: 7000000, bonus: 1200000, stock: 5000000, source: 'CONTRIBUTOR', confidence_score: 0.87 },
+  // Record 59 — Wipro L6 (senior IT services level, missing from Wipro set)
+  { companyVariant: 'Wipro', role: 'Software Engineer', level: 'L6', location: 'Delhi', currency: 'INR', experience_years: 12, base_salary: 2800000, bonus: 200000, stock: 0, source: 'CONTRIBUTOR', confidence_score: 0.77 },
+  // Record 60 — Zepto Bengaluru (startup presence outside Mumbai)
+  { companyVariant: 'Zepto', role: 'Software Engineer', level: 'SDE_I', location: 'Bengaluru', currency: 'INR', experience_years: 2, base_salary: 1900000, bonus: 160000, stock: 550000, source: 'CONTRIBUTOR', confidence_score: 0.82 },
 ]
 
 // ─── Seed Function ────────────────────────────────────────────────────────────

@@ -87,7 +87,11 @@ export async function GET(request: NextRequest) {
       orderBy,
       skip,
       take: limit,
-      include: { company: true },
+      include: {
+        company: {
+          select: { name: true, slug: true, industry: true, headquarters: true },
+        },
+      },
     }),
   ])
 
