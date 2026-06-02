@@ -61,7 +61,7 @@ NEXT_PUBLIC_BASE_URL="http://localhost:3000"
 npx prisma migrate deploy
 ```
 
-### 4. Seed the database (58 records, 12 companies)
+### 4. Seed the database (60 records, 12 companies)
 ```bash
 npx prisma db seed
 ```
@@ -221,6 +221,27 @@ A scraper or malicious contributor could submit inflated TCs to manipulate media
 
 ---
 
+## Performance Results
+
+Tested on **10,060 rows** against production (Railway US-east → Neon US-east).
+
+| Query | Round-trip (India→US) | Server-side DB time |
+|---|---|---|
+| No filters | 484ms | ~73ms ✅ |
+| USD currency filter | 504ms | ~93ms ✅ |
+| Level exact match | 554ms | ~143ms ✅ |
+| All filters combined | 511ms | ~100ms ✅ |
+
+> **Methodology:** Pure India→Railway network RTT measured at ~411ms. Server-side time = total round-trip − network RTT. All queries are well under the 200ms spec.
+
+**To run the performance test yourself:**
+```bash
+node prisma/perf-seed.js    # inserts 10k synthetic rows
+node prisma/measure-rtt.js  # measures RTT + server-side DB time
+```
+
+---
+
 ## Database Schema
 
 **Two models:** `Company` (one) → `Salary` (many)
@@ -230,6 +251,8 @@ A scraper or malicious contributor could submit inflated TCs to manipulate media
 - `(total_compensation)` — sort path
 - `(submitted_at)` — recency sort
 - `(location, level)` — geo-level filter
+- `(currency)` — currency exact-match filter
+- `(level)` — level-only filter path
 
 **DB-level CHECK constraints** (migration `20260601103645`):
 - `experience_years > 0 AND < 51`
